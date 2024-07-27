@@ -12,6 +12,18 @@ pipeline {
             }
         }
 
+
+        stage('Check PATH') {
+            steps {
+                sh 'echo $PATH'
+            }
+        }
+        stage('Verify .NET SDK') {
+            steps {
+                sh 'dotnet --version'
+            }
+        }
+
      stage('CODE CHECKOUT') {
             steps {
                 git 'https://github.com/pradiptakayal/web.git'
