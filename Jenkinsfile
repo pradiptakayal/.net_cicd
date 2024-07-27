@@ -13,18 +13,7 @@ pipeline {
         }
 
 
-        stage('Check PATH') {
-            steps {
-                sh 'echo $PATH'
-            }
-        }
-        stage('Verify .NET SDK') {
-            steps {
-                sh 'dotnet --version'
-            }
-        }
-
-     stage('CODE CHECKOUT') {
+            stage('CODE CHECKOUT') {
             steps {
                 git 'https://github.com/pradiptakayal/web.git'
             }
@@ -36,6 +25,23 @@ pipeline {
                    sed -i "s/image-name:latest/$JOB_NAME:v1.$BUILD_ID/g" playbooks/dep_svc.yml
                    sed -i "s/IMAGE_NAME/$JOB_NAME:v1.$BUILD_ID/g" webapp/Views/Home/Index.cshtml
                    '''
+            }
+        }
+
+         stage('Restore') {
+            steps {
+                sh 'dotnet restore'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'dotnet build -c Release'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'dotnet test --no-build -c Release'
             }
         }
 
