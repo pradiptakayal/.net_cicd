@@ -26,10 +26,24 @@ pipeline {
                    '''
             }
         }
-        
-        stage('BUILD') {
+
+        stage('Restore Dependencies') {
             steps {
-                sh 'mvn clean install package'
+                script {
+                    // Restore .NET Core dependencies
+                    sh 'dotnet restore'
+                }
+            }
+        }
+        
+      
+
+         stage('Build') {
+            steps {
+                script {
+                    // Build .NET Core application
+                    sh 'dotnet build -c Release'
+                }
             }
         }
 
