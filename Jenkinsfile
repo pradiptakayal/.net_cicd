@@ -26,6 +26,12 @@ pipeline {
                    '''
             }
         }
+
+        stage('Restore') {
+            steps {
+                sh 'dotnet restore'
+            }
+        }
         
         stage('BUILD') {
             steps {
