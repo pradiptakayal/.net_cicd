@@ -29,7 +29,7 @@ pipeline {
 
          stage('Restore') {
             steps {
-                dir('web/webapp/') { // Change this to your project's directory
+                dir('web/webapp') { // Change this to your project's directory
                     sh 'dotnet restore'
                 }
             }
