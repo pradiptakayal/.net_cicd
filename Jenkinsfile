@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-     PATH = "$PATH:/usr/share/dotnet:$HOME/.dotnet/tools"
+      PATH = "$PATH:/usr/share/dotnet:$HOME/.dotnet/tools"
     }
     
     stages {
@@ -12,8 +12,7 @@ pipeline {
             }
         }
 
-
-            stage('CODE CHECKOUT') {
+     stage('CODE CHECKOUT') {
             steps {
                 git 'https://github.com/pradiptakayal/web.git'
             }
@@ -23,36 +22,14 @@ pipeline {
                 sh '''
                    sed "s/image-name:latest/$JOB_NAME:v1.$BUILD_ID/g" playbooks/dep_svc.yml
                    sed -i "s/image-name:latest/$JOB_NAME:v1.$BUILD_ID/g" playbooks/dep_svc.yml
-                   sed -i "s/IMAGE_NAME/$JOB_NAME:v1.$BUILD_ID/g" webapp/Views/Home/Index.cshtml
+                     sed -i "s/IMAGE_NAME/$JOB_NAME:v1.$BUILD_ID/g" webapp/Views/Home/Index.cshtml
                    '''
             }
         }
-
-         stage('Restore') {
-            steps {
-                sh 'dotnet restore'
-            }
-        }
         
-        stage('Build') {
+        stage('BUILD') {
             steps {
-                sh 'dotnet build -c Release'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'dotnet test --no-build -c Release'
-            }
-        }
-
-             
-
-         stage('Build') {
-            steps {
-                script {
-                    // Build .NET Core application
-                    sh 'dotnet build -c Release'
-                }
+                sh 'mvn clean install package'
             }
         }
 
