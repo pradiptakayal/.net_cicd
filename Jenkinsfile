@@ -27,16 +27,7 @@ pipeline {
             }
         }
 
-        stage('Restore Dependencies') {
-            steps {
-                script {
-                    // Restore .NET Core dependencies
-                    sh 'dotnet restore'
-                }
-            }
-        }
-        
-      
+             
 
          stage('Build') {
             steps {
