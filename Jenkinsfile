@@ -32,11 +32,6 @@ pipeline {
         
         
          
-        stage('Verify SonarScanner Installation') {
-            steps {
-                sh 'export PATH="$PATH:$HOME/.dotnet/tools" && dotnet sonarscanner --version'
-            }
-        }
         
        stage('MODIFIED IMAGE TAG') {
             steps {
@@ -86,7 +81,7 @@ pipeline {
                 sonar_token = credentials('SONAR_TOKEN')
             }
             steps {
-                dir('/var/lib/jenkins/workspace/project-2/web/webapp') {
+                dir('/var/lib/jenkins/workspace/project-2/webapp') {
                     sh '''
                     export PATH="$PATH:$HOME/.dotnet/tools"
                     dotnet sonarscanner begin /k:"project-2" /d:sonar.host.url="http://192.168.33.11:9000" /d:sonar.login="$sonar_token"
