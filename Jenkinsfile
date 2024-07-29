@@ -18,12 +18,7 @@ pipeline {
             }
         }
 
-        
-
-        
-         
-        
-       stage('MODIFIED IMAGE TAG') {
+         stage('MODIFIED IMAGE TAG') {
             steps {
                 sh '''
                    sed "s/image-name:latest/$JOB_NAME:v1.$BUILD_ID/g" playbooks/dep_svc.yml
