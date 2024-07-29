@@ -60,6 +60,22 @@ pipeline {
         }
 
 
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube') {
+                        sh """
+                            export PATH=\$PATH:/home/vagrant/.dotnet/tools
+                            dotnet sonarscanner begin /k:"project-1" /d:sonar.host.url="http://192.168.1.19:9000" /d:sonar.login="SONAR_TOKEN1"
+                            dotnet build
+                            dotnet sonarscanner end /d:sonar.login="SONAR_TOKEN1"
+                        """
+                    }
+                }
+            }
+        }
+
+
         stage('Sonar Scanner') {
             environment {
                 sonar_token = credentials('SONAR_TOKEN1')
