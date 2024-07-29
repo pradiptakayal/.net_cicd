@@ -86,7 +86,7 @@ pipeline {
                 sonar_token = credentials('SONAR_TOKEN')
             }
             steps {
-                dir('/var/lib/jenkins/workspace/project-2/webapp') {
+                dir('/var/lib/jenkins/workspace/project-2/web/webapp') {
                     sh '''
                     export PATH="$PATH:$HOME/.dotnet/tools"
                     dotnet sonarscanner begin /k:"project-2" /d:sonar.host.url="http://192.168.33.11:9000" /d:sonar.login="$sonar_token"
@@ -97,17 +97,7 @@ pipeline {
             }
         }
 
-        stage('SONAR SCANNER') {
-            environment {
-            sonar_token = credentials('SONAR_TOKEN')
-            }
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.projectName=$JOB_NAME \
-                    -Dsonar.projectKey=$JOB_NAME \
-                    -Dsonar.host.url=http://192.168.33.11:9000 \
-                    -Dsonar.token=$sonar_token'
-            }
-        } 
+        
 
          stage('COPY JAR & DOCKERFILE') {
             steps {
