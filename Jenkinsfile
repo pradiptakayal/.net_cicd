@@ -23,6 +23,13 @@ pipeline {
                 sh 'dotnet --version'
             }
         }
+
+         stages {
+        stage('Verify SonarScanner Installation') {
+            steps {
+                sh 'export PATH="$PATH:$HOME/.dotnet/tools" && dotnet sonarscanner --version'
+            }
+        }
        stage('MODIFIED IMAGE TAG') {
             steps {
                 sh '''
