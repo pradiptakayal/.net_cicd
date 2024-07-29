@@ -41,9 +41,11 @@ pipeline {
             }
         }
         
-        stage('BUILD') {
+        stage('Build') {
             steps {
-                sh 'mvn clean install package'
+                dir('/var/lib/jenkins/workspace/project-2/webapp') {
+                    sh 'dotnet build --configuration Release'
+                }
             }
         }
 
