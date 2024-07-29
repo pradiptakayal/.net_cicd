@@ -17,6 +17,12 @@ pipeline {
                 git 'https://github.com/pradiptakayal/web.git'
             }
         }
+
+        stage('Check .NET SDK') {
+            steps {
+                sh 'dotnet --version'
+            }
+        }
        stage('MODIFIED IMAGE TAG') {
             steps {
                 sh '''
@@ -29,7 +35,7 @@ pipeline {
 
          stage('Restore') {
             steps {
-                dir('web/webapp') { // Change this to your project's directory
+                dir('web/webapp') { // Ensure this is the correct path to your project directory
                     sh 'dotnet restore'
                 }
             }
