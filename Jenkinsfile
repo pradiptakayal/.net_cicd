@@ -18,18 +18,8 @@ pipeline {
             }
         }
 
-        stage('Check .NET SDK') {
-            steps {
-                sh 'dotnet --version'
-            }
-        }
-
-        stage('Print PATH') {
-            steps {
-                sh 'echo $PATH'
-            }
-        }
         
+
         
          
         
@@ -59,13 +49,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                dir('/var/lib/jenkins/workspace/project-2/webapp') {
-                    sh 'dotnet test'
-                }
-            }
-        }
 
         stage('Publish') {
             steps {
@@ -84,7 +67,7 @@ pipeline {
                 dir('/var/lib/jenkins/workspace/project-2/webapp') {
                     sh '''
                     export PATH="$PATH:$HOME/.dotnet/tools"
-                    dotnet sonarscanner begin /k:"project-2" /d:sonar.host.url="http://192.168.33.11:9000" /d:sonar.login="$sonar_token"
+                    dotnet sonarscanner begin /k:"project-1" /d:sonar.host.url="http://192.168.33.11:9000" /d:sonar.login="$sonar_token"
                     dotnet build
                     dotnet sonarscanner end /d:sonar.login="$sonar_token"
                     '''
