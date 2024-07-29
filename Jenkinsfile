@@ -24,6 +24,17 @@ pipeline {
             }
         }
 
+        stage('Print PATH') {
+            steps {
+                sh 'echo $PATH'
+            }
+        }
+        stage('Verify SonarScanner Installation') {
+            steps {
+                sh 'export PATH="$PATH:$HOME/.dotnet/tools" && dotnet sonarscanner --version'
+            }
+        }
+
          
         stage('Verify SonarScanner Installation') {
             steps {
