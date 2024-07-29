@@ -35,7 +35,7 @@ pipeline {
 
          stage('Restore') {
             steps {
-                dir('/webapp/') { // Ensure this is the correct path to your project directory
+                dir('/var/lib/jenkins/workspace/project-2/webapp/') { // Ensure this is the correct path to your project directory
                     sh 'dotnet restore'
                 }
             }
