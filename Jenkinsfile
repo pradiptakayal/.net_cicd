@@ -56,7 +56,7 @@ pipeline {
 
         stage('Sonar Scanner') {
             environment {
-                sonar_token = credentials('SONAR_TOKEN')
+                sonar_token = credentials('SONAR_TOKEN1')
             }
             steps {
                 dir('/var/lib/jenkins/workspace/project-2/webapp') {
