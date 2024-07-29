@@ -12,6 +12,12 @@ pipeline {
             }
         }
 
+        stage('Check PATH') {
+            steps {
+                sh 'echo $PATH'
+            }
+        }
+
      stage('CODE CHECKOUT') {
             steps {
                 git 'https://github.com/pradiptakayal/web.git'
