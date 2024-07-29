@@ -73,7 +73,8 @@ pipeline {
             steps {
                 dir('/var/lib/jenkins/workspace/project-2/webapp') {
                     sh '''
-                    dotnet sonarscanner begin /k:"$JOB_NAME" /d:sonar.host.url="http://192.168.33.11:9000" /d:sonar.login="$sonar_token"
+                    export PATH="$PATH:$HOME/.dotnet/tools"
+                    dotnet sonarscanner begin /k:"project-2" /d:sonar.host.url="http://192.168.33.11:9000" /d:sonar.login="$sonar_token"
                     dotnet build
                     dotnet sonarscanner end /d:sonar.login="$sonar_token"
                     '''
