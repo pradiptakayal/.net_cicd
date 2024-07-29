@@ -49,6 +49,38 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                dir('/var/lib/jenkins/workspace/project-2/webapp') {
+                    sh 'dotnet test'
+                }
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                dir('/var/lib/jenkins/workspace/project-2/webapp') {
+                    sh 'dotnet publish --configuration Release --output ./publish'
+                }
+            }
+        }
+
+
+        stage('Sonar Scanner') {
+            environment {
+                sonar_token = credentials('SONAR_TOKEN')
+            }
+            steps {
+                dir('/var/lib/jenkins/workspace/project-2/webapp') {
+                    sh '''
+                    dotnet sonarscanner begin /k:"$JOB_NAME" /d:sonar.host.url="http://192.168.33.11:9000" /d:sonar.login="$sonar_token"
+                    dotnet build
+                    dotnet sonarscanner end /d:sonar.login="$sonar_token"
+                    '''
+                }
+            }
+        }
+
         stage('SONAR SCANNER') {
             environment {
             sonar_token = credentials('SONAR_TOKEN')
