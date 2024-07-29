@@ -35,7 +35,7 @@ pipeline {
 
          stage('Restore') {
             steps {
-                dir('web/webapp/webapp.csproj') { // Ensure this is the correct path to your project directory
+                dir('/webapp/') { // Ensure this is the correct path to your project directory
                     sh 'dotnet restore'
                 }
             }
