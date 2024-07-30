@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: my-app1
   labels:
-    app: my-app
+    app: my-app1
 spec:
   replicas: 2
   strategy:
@@ -13,14 +13,14 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: my-app
+      app: my-app1
   template:
     metadata:
       labels:
-        app: my-app
+        app: my-app1
     spec:
       containers:
-      - name: my-app
+      - name: my-app1
         image: pradiptakayal/image-name:latest
         imagePullPolicy: Never
         ports:
@@ -40,11 +40,11 @@ kind: Service
 metadata:
   name: my-app-service
   labels:
-    app: my-app
+    app: my-app1
 spec:
   type: NodePort
   selector:
-    app: my-app
+    app: my-app1
   ports:
   - name: http
     port: 80
