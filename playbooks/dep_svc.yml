@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: my-app1
-        image: pradiptakayal/image-name:latest
+        image: pradiptakayal/project-2:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8080        
