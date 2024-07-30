@@ -12,7 +12,7 @@
     - name: COPY DOCKERFILE
       copy:
         src: ../Dockerfile
-        dest: /opt/docker/publish
+        dest: /opt/docker/
 
     - name: COPY .NET CORE PUBLISH DIRECTORY
       copy:
