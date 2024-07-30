@@ -7,14 +7,15 @@
       file:
         path: /opt/docker
         state: directory
-        mode: "0755"      
+        mode: "0755"
 
     - name: COPY DOCKERFILE
       copy:
         src: ../Dockerfile
         dest: /opt/docker
 
-    - name: COPY WAR FILE
+    - name: COPY .NET CORE PUBLISH DIRECTORY
       copy:
-        src: ../webapp/target/webapp.war
+        src: ../dotnetcoreapp/publish/
         dest: /opt/docker
+        remote_src: no
