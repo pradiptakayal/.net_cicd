@@ -16,6 +16,6 @@
 
     - name: COPY .NET CORE PUBLISH DIRECTORY
       copy:
-        src: ../dotnetcoreapp/publish/
+        src: ../webapp/publish/
         dest: /opt/docker
         remote_src: no
