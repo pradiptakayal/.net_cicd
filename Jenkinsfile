@@ -51,16 +51,6 @@ pipeline {
         }
 
 
-        stage('Publish') {
-            steps {
-                dir('/var/lib/jenkins/workspace/project-2/webapp') {
-                    sh 'dotnet publish --configuration Release --output ./publish'
-                }
-            }
-        }
-
-
-
          stage('COPY Project & DOCKERFILE') {
             steps {
                 sh 'ansible-playbook playbooks/create_directory.yml'
