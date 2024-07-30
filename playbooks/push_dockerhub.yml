@@ -5,7 +5,7 @@
   tasks:
     - name: TAG IMAGE WITH BUILD ID & LATEST
       shell: |
-        cd /opt/docker
+        cd /opt/docker/publish
         docker build -t {{ JOB_NAME }}:v1.{{ BUILD_ID }} .
         docker tag {{ JOB_NAME }}:v1.{{ BUILD_ID }} {{ dockerhub_user }}/{{ JOB_NAME }}:v1.{{ BUILD_ID }}
         docker tag {{ JOB_NAME }}:v1.{{ BUILD_ID }} {{ dockerhub_user }}/{{ JOB_NAME }}:latest
