@@ -52,16 +52,20 @@ pipeline {
         }
 
 
+       
         stage('SonarQube Analysis') {
             steps {
-                // Start SonarQube analysis
-                sh 'dotnet sonarscanner begin /k:"project-2" /d:sonar.host.url="http://192.168.1.19:9000" /d:sonar.login="${SONAR_TOKEN}"'
-
-                // Build the project again to include SonarQube analysis
-                sh 'dotnet build'
-
-                // End SonarQube analysis
-                sh 'dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"'
+                dir('webapp') {  // Adjusted to your project directory
+                    sh '''
+                        dotnet sonarscanner begin /k:"project-2" \
+                            /d:sonar.host.url="http://192.168.1.19:9000" \
+                            /d:sonar.login="${SONAR_TOKEN}"
+                        
+                        dotnet build --configuration Release
+                        
+                        dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"
+                    '''
+                }
             }
         }
 
