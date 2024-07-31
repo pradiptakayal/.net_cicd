@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-      PATH = "$PATH:/usr/share/dotnet:$HOME/.dotnet/tools"
       SONAR_TOKEN = credentials('SONAR_TOKEN')  // Jenkins credentials ID for SonarQube token
       PATH = "$PATH:$HOME/.dotnet/tools"  // Ensure .NET tools are in PATH
     }
