@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment {
       PATH = "$PATH:/usr/share/dotnet:$HOME/.dotnet/tools"
+      SONAR_TOKEN = credentials('SONAR_TOKEN')  // Jenkins credentials ID for SonarQube token
+      PATH = "$PATH:$HOME/.dotnet/tools"  // Ensure .NET tools are in PATH
     }
     
     stages {
@@ -52,13 +54,14 @@ pipeline {
 
 
         stage('SonarQube Analysis') {
-            environment {
-                SONAR_TOKEN = credentials('SONAR_TOKEN')  // Ensure token is available here
-            }
             steps {
-                // Run SonarQube analysis
+                // Start SonarQube analysis
                 sh 'dotnet sonarscanner begin /k:"project-2" /d:sonar.host.url="http://192.168.1.19:9000" /d:sonar.login="${SONAR_TOKEN}"'
+
+                // Build the project again to include SonarQube analysis
                 sh 'dotnet build'
+
+                // End SonarQube analysis
                 sh 'dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"'
             }
         }
