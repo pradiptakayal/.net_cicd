@@ -1,52 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app1
+  name: dotnet-core-app
   labels:
-    app: my-app1
+    app: dotnet-core-app
 spec:
   replicas: 0
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 0
   selector:
     matchLabels:
-      app: my-app1
+      app: dotnet-core-app
   template:
     metadata:
       labels:
-        app: my-app1
+        app: dotnet-core-app
     spec:
       containers:
-      - name: my-app1
-        image: pradiptakayal/project-2:latest
-        imagePullPolicy: Never
+      - name: coreapp
+        image: pradiptakayal/project-2:latest  # Replace with your Docker image
         ports:
-        - containerPort: 8080        
-        readinessProbe:
-          httpGet:
-            path: /webapp
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 30
-          successThreshold: 1
-          timeoutSeconds: 30
-      terminationGracePeriodSeconds: 30            
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-app-service
-  labels:
-    app: my-app1
+  name: dotnet-core-service
 spec:
   type: NodePort
   selector:
-    app: my-app1
+    app: dotnet-core-app
   ports:
-  - name: http
-    port: 80
-    targetPort: 8080
-    nodePort: 30000
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30001  # Choose an appropriate port within the range 30000-32767
