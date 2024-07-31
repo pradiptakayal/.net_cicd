@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: coreapp
-        image: pradiptakayal/project-2:latest  # Replace with your Docker image
+        image: pradiptakayal/image-name:latest  # Replace with your Docker image
         ports:
         - containerPort: 80
         env:
