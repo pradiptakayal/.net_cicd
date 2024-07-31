@@ -51,18 +51,17 @@ pipeline {
         }
 
 
-        stage('SONAR SCANNER') {
+        sstage('SonarQube Analysis') {
             environment {
-            sonar_token = credentials('SONAR_TOKEN')
+                SONAR_TOKEN = credentials('SONAR_TOKEN')  // Ensure token is available here
             }
             steps {
-                sh '/opt/apache-maven-3.8.8/bin/mvn sonar:sonar -Dsonar.projectName=$JOB_NAME \
-                    -Dsonar.projectKey=$JOB_NAME \
-                    -Dsonar.host.url=http://192.168.1.19:9000 \
-                    -Dsonar.token=$sonar_token'
+                // Run SonarQube analysis
+                sh 'dotnet sonarscanner begin /k:"project-2" /d:sonar.host.url="http://192.168.1.19:9000" /d:sonar.login="${SONAR_TOKEN}"'
+                sh 'dotnet build'
+                sh 'dotnet sonarscanner end /d:sonar.login="${SONAR_TOKEN}"'
             }
-        } 
-
+        }
 
          stage('COPY Project & DOCKERFILE') {
             steps {
