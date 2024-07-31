@@ -51,7 +51,7 @@ pipeline {
         }
 
 
-        sstage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             environment {
                 SONAR_TOKEN = credentials('SONAR_TOKEN')  // Ensure token is available here
             }
